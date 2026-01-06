@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1beta1
+kind: ArgoCD
+metadata:
+  name: openshift-gitops
+  namespace: openshift-gitops
+spec:
+  kustomizeBuildOptions: --enable-alpha-plugins
+  repo:
+    env:
+    - name: KUSTOMIZE_PLUGIN_HOME
+      value: /etc/kustomize/plugin
+    initContainers:
+    - args:
+      - -c
+      - cp /policy-generator/PolicyGenerator-not-fips-compliant /policy-generator-tmp/PolicyGenerator
+      command:
+      - /bin/bash
+      image: registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9@sha256:2c8f89fa9958f0422c6ce6a1acf6e6343967c78d0966937fca19e27e52e7a428
+## image found by running: oc get deployment multicluster-operators-hub-subscription -n open-cluster-management -o jsonpath='{.spec.template.spec.containers[0].image}' | jq . on the ACM hub cluster
+      name: policy-generator-install
+      volumeMounts:
+      - mountPath: /policy-generator-tmp
+        name: policy-generator
+    volumeMounts:
+    - mountPath: /etc/kustomize/plugin/policy.open-cluster-management.io/v1/policygenerator
+      name: policy-generator
+    volumes:
+    - emptyDir: {}
+      name: policy-generator
