@@ -1,0 +1,7 @@
+apiVersion: config.openshift.io/v1
+kind: ClusterVersion
+metadata:
+  name: version
+spec:
+  channel: '{{ (lookup "config.openshift.io/v1" "ClusterVersion" "" "version").spec.channel }}'
+  upstream: https://api.openshift.com/api/upgrades_info/v1/graph

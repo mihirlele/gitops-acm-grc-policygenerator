@@ -1,0 +1,20 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: disconnected-cluster-upgrades
+policyDefaults:
+  categories: []
+  controls: []
+  standards: []
+  namespace: acm-policies
+  remediationAction: enforce
+  severity: medium
+  placement:
+    placementPath: local-placement.yaml
+policies:
+  - name: setup-disconnected-config
+    manifests:
+      - path: disconnectedclusterconfig
+  - name: setup-cluster-version
+    manifests:
+      - path: clusterVersion.yaml 
