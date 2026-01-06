@@ -27,3 +27,4 @@ spec:
     volumes:
     - emptyDir: {}
       name: policy-generator
+## oc patch argocd openshift-gitops -n openshift-gitops --type=merge -f argocd.yaml
