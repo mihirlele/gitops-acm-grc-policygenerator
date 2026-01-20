@@ -1,0 +1,17 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: create-custom-argocd-instance
+policyDefaults:
+  categories: []
+  controls: []
+  standards: []
+  namespace: acm-policies
+  remediationAction: enforce
+  severity: medium
+  placement:
+    placementPath: local-placement.yaml
+policies:
+  - name: create-custom-argocd-instance
+    manifests:
+      - path: argocd.yaml 
