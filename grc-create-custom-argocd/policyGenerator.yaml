@@ -14,4 +14,4 @@ policyDefaults:
 policies:
   - name: create-custom-argocd-instance
     manifests:
-      - path: argocd.yaml 
+      - path: argocd 
